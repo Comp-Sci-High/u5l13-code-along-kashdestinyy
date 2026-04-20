@@ -46,7 +46,7 @@
             <h2><%= teachers[i].name %></h2>
             <p><strong>Department:</strong> <%= teachers[i].department %></p>
             <!-- Add a button that calls a deleteTeacher function with their id passed as input -->
-             
+             <button onClick="deleteTeacher"('<%= teachers[i]._id %>')Delete Teacher</button>
           </div>
         </div>
       <% } %>
