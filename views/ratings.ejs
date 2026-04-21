@@ -24,23 +24,7 @@
     <div class="form-section">
       <h2>Leave a Comment</h2>
 
-      <form>
-        <label>Username: </label>
-        <input type="text" name="username" />
-
-        <label>Teacher: </label>
-        <input type="text" name="teacher" />
-
-        <label>Comment: </label>
-        <input type="text" name="comment" />
-
-        <label>Rating: </label>
-        <input type="number" name="rating" min="1" max="5" />
-
-        <button type="submit">Submit</button>
-      </form>
-
-    </div>
+      
 
     <div class="teachers-grid">
       <% for (let i = 0; i < ratings.length; i++) { %>
@@ -58,6 +42,31 @@
             <p><strong>Comment:</strong> <%= ratings[i].comment %></p>
             <p><em>By: <%= ratings[i].username %></em></p>
             <!-- Add a button that calls a deleteRating function with its id passed as input -->
+
+<!-- Edit Form -->
+           <form class="edit-form" id="editForm<%= i %>" style="display:none;">
+             <label>Username: </label>
+             <input type="text" name="username" value="<%= ratings[i].username %>" required />
+            
+             <label>Teacher: </label>
+             <input type="text" name="teacher" value="<%= ratings[i].teacher %>" />
+            
+             <label>Comment: </label>
+             <input type="text" name="comment" value="<%= ratings[i].image %>" />
+
+
+             <label>Ratings: </label>
+             <input type="text" name="ratings" value="<%= ratings[i].image %>" />
+            
+             <button type="submit">Save</button>
+             <button type="button" onclick="cancelEdit('<%= i %>')">Cancel</button>
+           </form>
+          
+           <!-- Action Buttons -->
+           <button onclick="toggleEditForm('<%= i %>')">Edit Ratings</button>
+           <button onclick="deleteRatings('<%= ratings[i]._id %>')">Delete Ratings</button>
+         </div>
+
 
           </div>
         </div>

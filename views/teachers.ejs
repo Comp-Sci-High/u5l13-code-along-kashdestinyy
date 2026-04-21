@@ -40,13 +40,30 @@
 
     <div class="teachers-grid">
       <% for (let i = 0; i < teachers.length; i++) { %>
-        <div class="teacher-card">
+        <div class="teacher-card" data-teacher-id="<%= teachers[i]._id %>">
           <img src="<%= teachers[i].image %>" alt="<%= teachers[i].name %>" />
           <div class="teacher-card-content">
             <h2><%= teachers[i].name %></h2>
             <p><strong>Department:</strong> <%= teachers[i].department %></p>
-            <!-- Add a button that calls a deleteTeacher function with their id passed as input -->
-             <button onClick="deleteTeacher"('<%= teachers[i]._id %>')Delete Teacher</button>
+            
+            <!-- Edit Form -->
+            <form class="edit-form" id="editForm<%= i %>" style="display:none;">
+              <label>Name: </label>
+              <input type="text" name="name" value="<%= teachers[i].name %>" required />
+              
+              <label>Department: </label>
+              <input type="text" name="department" value="<%= teachers[i].department %>" />
+              
+              <label>Image: </label>
+              <input type="text" name="image" value="<%= teachers[i].image %>" />
+              
+              <button type="submit">Save</button>
+              <button type="button" onclick="cancelEdit(<%= i %>)">Cancel</button>
+            </form>
+            
+            <!-- Action Buttons -->
+            <button onclick="toggleEditForm(<%= i %>)">Edit Teacher</button>
+            <button onclick="deleteTeacher('<%= teachers[i]._id %>')">Delete Teacher</button>
           </div>
         </div>
       <% } %>
