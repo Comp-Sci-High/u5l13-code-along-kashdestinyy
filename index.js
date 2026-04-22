@@ -81,7 +81,7 @@ app.patch("/teachers/:id", async (req,res)=>{
   res.json(response)
 })
 
-app.patch("/rating/:id", async (req,res)=>{
+app.patch("/ratings/:id", async (req,res)=>{
  const response = await Rating.findOneAndUpdate(
    {_id: req.params.id},
    {
@@ -95,34 +95,41 @@ app.patch("/rating/:id", async (req,res)=>{
  res.json(response)
 })
 
-
-
-
-
-// Create a dynamic delete route to remove a teacher by their ID
-
 app.delete("/teachers/:id", async (req,res)=>{
-  const response = await Teacher.findOneAndDelete({_id: req.params.id})
-  res.json(response)
+ const response = await Teacher.findByIdAndDelete(req.params.id)
+ res.json(response)
 })
 
-
-// Create a dynamic delete route to remove a rating by it's ID
-  
-app.delete("/:rating/:id", async (req,res)=>{
-  const response = await Teacher.findOneAndDelete({_id: req.params.id})
-  res.json(response)
+app.delete("/ratings/:id", async (req,res)=>{
+ const response = await Rating.findByIdAndDelete(req.params.id)
+ res.json(response)
 })
- 
 
 async function startServer() {
-  await mongoose.connect(
-    "mongodb+srv://SE12:CSH2026@cluster0.ytvmkmf.mongodb.net/?appName=Cluster0"
-  );
-
-  app.listen(3000, () => {
-    console.log(`Server running.`);
-  });
+  try {
+    // MongoDB Atlas connection (free tier)
+    // Replace 'username' and 'password' with your MongoDB Atlas credentials
+    const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/teacher-rater"
+    
+    await mongoose.connect(mongoURI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      retryWrites: true,
+    })
+    console.log("Connected to MongoDB")
+    
+    const PORT = process.env.PORT || 3000
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`)
+    })
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error.message)
+    console.log("\nTo fix this issue:")
+    console.log("1. Make sure MongoDB is running locally, OR")
+    console.log("2. Use MongoDB Atlas (free): https://www.mongodb.com/cloud/atlas")
+    console.log("3. Set MONGO_URI environment variable with your connection string")
+    process.exit(1)
+  }
 }
 
-startServer();
+startServer()

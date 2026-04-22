@@ -23,12 +23,25 @@
 
     <div class="form-section">
       <h2>Leave a Comment</h2>
+      <form>
+        <label>Username: </label>
+        <input type="text" name="username" required />
 
-      
+        <label>Teacher: </label>
+        <input type="text" name="teacher" required />
+
+        <label>Comment: </label>
+        <textarea name="comment" required></textarea>
+
+        <label>Rating (1-5): </label>
+        <input type="number" name="rating" min="1" max="5" required />
+
+        <button type="submit">Submit</button>
+      </form>
 
     <div class="teachers-grid">
       <% for (let i = 0; i < ratings.length; i++) { %>
-        <div class="teacher-card">
+        <div class="teacher-card" data-ratings-id="<%= ratings[i]._id %>">
           <div class="teacher-card-content">
             <h2><%= ratings[i].teacher %></h2>
             <div class="stars">
@@ -44,7 +57,7 @@
             <!-- Add a button that calls a deleteRating function with its id passed as input -->
 
 <!-- Edit Form -->
-           <form class="edit-form" id="editForm<%= i %>" style="display:none;">
+           <form class="edit-form" id="editForm<%= i %>" style="display:none;" data-ratings-id="<%= ratings[i]._id %>">
              <label>Username: </label>
              <input type="text" name="username" value="<%= ratings[i].username %>" required />
             
@@ -52,19 +65,18 @@
              <input type="text" name="teacher" value="<%= ratings[i].teacher %>" />
             
              <label>Comment: </label>
-             <input type="text" name="comment" value="<%= ratings[i].image %>" />
+             <textarea name="comment" required><%= ratings[i].comment %></textarea>
 
-
-             <label>Ratings: </label>
-             <input type="text" name="ratings" value="<%= ratings[i].image %>" />
+             <label>Rating: </label>
+             <input type="number" name="rating" min="1" max="5" value="<%= ratings[i].rating %>" required />
             
              <button type="submit">Save</button>
-             <button type="button" onclick="cancelEdit('<%= i %>')">Cancel</button>
+             <button type="button" onclick="cancelEdit(<%= i %>)">Cancel</button>
            </form>
           
            <!-- Action Buttons -->
-           <button onclick="toggleEditForm('<%= i %>')">Edit Ratings</button>
-           <button onclick="deleteRatings('<%= ratings[i]._id %>')">Delete Ratings</button>
+           <button onclick="toggleEditForm(<%= i %>)">Edit Ratings</button>
+           <button onclick="deleteRating('<%= ratings[i]._id %>')">Delete Ratings</button>
          </div>
 
 

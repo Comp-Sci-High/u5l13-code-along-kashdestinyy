@@ -40,7 +40,7 @@ document.addEventListener("submit", async (e) => {
    if (e.target.classList.contains("edit-form")) {
        e.preventDefault()
        const formIndex = e.target.id.replace("editForm", "")
-       const ratingsId = e.target.closest(".ratings-card").getAttribute("data-ratings-id")
+       const ratingsId = e.target.closest(".teacher-card").getAttribute("data-ratings-id")
       
        const formData = new FormData(e.target)
        const req = Object.fromEntries(formData)
@@ -57,7 +57,7 @@ document.addEventListener("submit", async (e) => {
        console.log(data)
 
 
-       window.location.href = "/"
+       window.location.href = "/ratings"
    }
 })
 
